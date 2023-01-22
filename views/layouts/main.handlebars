@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cool Blog!</title>
+  {{!-- BootStrap Style Link --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  {{!-- <link rel="stylesheet" href="/css/jass.css"> --}}
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body style="background-color:#C0C0C0; height: 1500px;">
+
+  <div class="flex-column">
+    
+    <header class="jumbotron" style="background-color">
+      <h1>The Tech Blog!</h1>
+      <nav class="d-flex flex-row">
+        <h5 class="mt-2 mr-2"><a href="/">Home</a></h5>
+        <h5 class="mt-2 mr-2"><a href="/dashboard">Dashboard</a></h5>
+        <!-- Conditionally render login or logout links -->
+        {{#if logged_in}}
+        <h5 class="mt-2 mr-2"><button class="no-button" id="logout">Logout</button></h5>
+        {{else}}
+        <h5 class="mt-2 mr-2"><a href="/login">Login</a></h5>
+        {{/if}}
+      </nav>
+    </header>
+
+
+    <main class="container container-fluid mt-5">
+      <!-- Render the sub layout -->
+      {{{ body }}}
+    </main>
+
+
+
+
+    <footer>
+      
+    </footer>
+  </div>
+
+  <!-- Render script for logged in users only -->
+  {{#if logged_in}}
+  <script src="/js/logout.js"></script>
+  {{/if}}
+</body>
+
+</html>
