@@ -6,7 +6,6 @@ const withAuth = require('../utils/auth');
 // This is default route for Homepage
 router.get('/', async (req, res) => {
     try {
-
       const postData = await Post.findAll({
         include: [
           { model: User, attributes: {exclude: ["password"] } }
@@ -16,7 +15,7 @@ router.get('/', async (req, res) => {
       // Need to include getting all the posts from the post data and using the #each helper in handlebars to display them in the homepage.handlebars
       res.render('homepage', { 
         posts,
-        // logged_in: req.session.logged_in 
+        logged_in: req.session.logged_in 
       });
     } catch (err) {
       res.status(500).json(err);
@@ -26,23 +25,17 @@ router.get('/', async (req, res) => {
 // Sign in router
 router.get('/login', async (req, res) => {
   try {
-
     res.render('login', {
-
     })
-
   } catch(err) {
-
+    res.status(500).json(err);
   }
 });
 
 // Sign up router
 router.get('/signup', async (req, res) => {
   try {
-
-    res.render('signup', {
-
-    })
+  res.render('signup', {})
 
   } catch(err) {
 
@@ -53,18 +46,32 @@ router.get('/signup', async (req, res) => {
 router.get('/dashboard', async (req, res) => {
   try {
 
-    // Find logged inuser based on session ID
-    const postData = await Post.findAll({
-      where: {
-        creator_id: req.session.user_id
-      }
+    const userData = await User.findByPk(1, {
+      attributes: { exclude: ['password']},
+      include: [{ model: Post }]
     });
+    const user = userData.get({ plain: true });
+    console.log(userData);
+    console.log(user);
 
-    const post = postData.get({plain: true});
+
+    // Why won't this work *****************************
+    // const postData = await Post.findAll({
+    //   where: {
+    //     creator_id: 1
+    //   },
+    //   include: [{ model: User, attributes: { exclude: ['password'] }}]
+    // });
+    // const post = postData.get({ plain: true })
+    // console.log(postData);
+    // console.log(post);
+
+   
 
     res.render('dashboard', {
-      post,
-      logged_in: req.session.logged_in
+      // why the ...user instead of just user
+      ...user
+      // logged_in: req.session.logged_in
     })
 
   } catch(err) {
@@ -72,9 +79,16 @@ router.get('/dashboard', async (req, res) => {
   }
 });
 
+router.get('/post/:id', async (req, res) => {
+  try { 
 
+    res.render('postpage');
 
+  } catch(err) {
+    res.status(500).json(err);
+  }
 
+})
 
 
 

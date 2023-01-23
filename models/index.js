@@ -3,12 +3,13 @@ const Post = require("./post");
 const Comment = require("./comment");
 
 // Post User
-Post.belongsTo(User, {
-  foreignKey: "creator_id",
-});
 User.hasMany(Post, {
   foreignKey: "creator_id",
 });
+Post.belongsTo(User, {
+  foreignKey: "creator_id",
+});
+
 // Post Comment
 Post.hasMany(Comment, {
   foreignKey: "post_id",

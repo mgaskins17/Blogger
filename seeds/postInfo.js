@@ -7,6 +7,16 @@ const postData = [
     post_text: "Test text for post create 1",
   },
   {
+    creator_id: 1,
+    post_title: "Title 1",
+    post_text: "Test text for post create 1",
+  },
+  {
+    creator_id: 1,
+    post_title: "Title 1",
+    post_text: "Test text for post create 1",
+  },
+  {
     creator_id: 2,
     post_title: "Title 2",
     post_text: "Test text for post create 2",

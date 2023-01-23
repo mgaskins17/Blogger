@@ -28,6 +28,14 @@ Comment.init(
         key: "id",
       },
     },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isAlphanumeric: true
+      }
+    },
     created_at: {
       type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW

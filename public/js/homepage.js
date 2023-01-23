@@ -1,0 +1,1 @@
+// homepage control javascript file for interactions
