@@ -23,11 +23,12 @@ const sess = {
     secure: false, // default is false - this is only used for HTTPS but our current use is for HTTP
     sameSite: 'strict', // setting cookie to only be used for the localhost:3001 url or example.com
   },
+  logged_in: false,
   resave: false, // don't want the cookie session to restore 
   saveUninitialized: true,
   store: new SequelizeStore({
     db: sequelize
-  })
+  }),
 };
 
 app.use(session(sess));

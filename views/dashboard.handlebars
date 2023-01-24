@@ -1,10 +1,14 @@
 {{!-- Loop overing each of the total posts in the posts array --}}
+{{#if logged_in}}
 {{#each posts as |post|}}
 <div class="mb-4">
     <div class="posts d-flex flex-row justify-content-between border border-dark rounded-top" >
         <h3 class="post-title p-2"><a href="/post/{{id}}">{{post_title}}</h3></a>
-        <p class="post-user pt-3 pr-2" style="text-size: 10px; font-weight: bold;">Posted by {{user.username}} on {{created_at}} </p>
+        <p class="post-user pt-3 pr-2" style="text-size: 10px; font-weight: bold;">Posted by {{username}} on {{created_at}} </p>
     </div>
     <div class="post-text border border-dark rounded-bottom p-2">{{post_text}}</div>
 </div>
 {{/each}}
+{{else}}
+<h5 class="text-center">Please sign in to view your Dashboard!</h5>
+{{/if}}

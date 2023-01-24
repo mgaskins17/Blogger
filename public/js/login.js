@@ -1,10 +1,13 @@
 // Building out login and sign up interactions
 
 // Fetch request for signing in - built as a function
-async function Login() {
+async function Login(event) {
+    event.preventDefault();
     // Collecting username and password from fields
-    const username = document.querySelector('#username-login').value.trim();
-    const password = document.querySelector('#password-login').value.trim();
+    const username = document.getElementById('username-login').value.trim();
+    const password = document.getElementById('password-login').value.trim();
+    // const username = 'User1';
+    // const password = 'password1';
 
     console.log('Please Work')
     console.log(username);
@@ -19,8 +22,8 @@ async function Login() {
         });
 
         if (response.ok) {
-            document.location.replace('/dashboard');
             console.log('Ok');
+            document.location.replace('/dashboard');            
         } else {
             alert(response.statusText);
         }
@@ -29,8 +32,8 @@ async function Login() {
 
 // Using above made function as the follow up action for clicking submit on logging in
 document
-    .querySelector('#signin-btn')
-    .addEventListener('click', Login());
+    .getElementById('signin-btn')
+    .addEventListener('click', Login);
 
 
 
