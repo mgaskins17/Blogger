@@ -20,13 +20,6 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-  //   res.json(userLogin);
-
-    // Checking the password
-    // const checkPass = await userLogin.checkPassword(req.body.password);
-    // const checkPass = await bcrypt.compare(req.body.password, user.password)
-    // console.log(checkPass);
-
     // Doing a straight comparison for passwords at this moment - could be hashed but I'm using seeded information
     if (req.body.password != user.password) {
       res.status(400).json({ message: 'Incorrect email or password, please try again' });
@@ -35,6 +28,7 @@ router.post('/login', async (req, res) => {
       console.log('It matches');
       req.session.save(() => {
         req.session.user_id = user.id;
+        req.session.user_name = user.username;
         req.session.logged_in = true;
 
         res.render('main', {
