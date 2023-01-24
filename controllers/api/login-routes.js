@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 // Login Post Route
 router.post('/login', async (req, res) => {
   try {
+
+    console.log(req.session.logged_in);
     const userLogin = await User.findOne({
       where: { username: req.body.username },
     });
@@ -28,7 +30,7 @@ router.post('/login', async (req, res) => {
       console.log('It matches');
       req.session.save(() => {
         req.session.user_id = user.id;
-        req.session.user_name = user.username;
+        req.session.username = user.username;
         req.session.logged_in = true;
 
         res.render('main', {
@@ -50,7 +52,22 @@ router.post('/login', async (req, res) => {
 // Sign-up Post Route
 router.post('/signup', async (req, res) => {
   try {
-    const userLogin = await User.create(req.body);
+
+    // Verify username isn't taken
+    const userCheck = await User.findOne({
+      where: { username: req.body.username }
+    });
+
+    if (userCheck) {
+      res.status(400).json({
+        message: "Username taken!"});
+      return;
+    }
+
+    const userLogin = await User.create({
+      username: req.body.username,
+      password: req.body.password
+    });
 
     req.session.save(() => {
       req.session.user_id = userLogin.id;
@@ -66,12 +83,15 @@ router.post('/signup', async (req, res) => {
 
 // Logout Route
 router.post('/logout', async (req, res) => {
-  if (req.session.loggedIn) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-  } else {
+  console.log(req.session);
+  if (req.session.logged_in) {
+    await req.session.destroy();
+  } 
+  else {
     res.status(404).end();
   }
 });
+module.exports = router;
+
+
 module.exports = router;

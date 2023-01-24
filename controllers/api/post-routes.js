@@ -6,21 +6,19 @@ const { User, Post, Comment } = require("../../models");
 // CREATE - Post Route for Creating Posts
 router.post('/postit', async (req, res) => {
     try {
-        // const data = {
-        //     name: req.session.user_name,
-        //     text: req.body.text,
-        //     title: req.body.title
-        // };
-        const postData = await Post.create({
-            creator_id: req.session.user_id,
-            post_text: req.body.text,
-            post_title: req.body.title
-        });
-
-        // body layout {creator_id = req.session.user_id, post_text: text input, post_title: text input}
-        res.status(200).json({message: 'New Post Created!', postData});
-    } catch(err) {
-      res.status(500).json(err);
+        const sessTest = req.session.logged_in ? true : false;
+        if (sessTest) {
+            const postData = await Post.create({
+                creator_id: req.session.user_id,
+                post_text: req.body.text,
+                post_title: req.body.title
+            });
+            res.status(200).json({ message: 'New Post Created!', postData });
+        } else {
+            res.status(401).json({ message: `You're not logged in!` });
+        }
+    } catch (err) {
+        res.status(500).json(err);
     }
 });
 
@@ -29,26 +27,33 @@ router.post('/postit', async (req, res) => {
 router.put('postup', async (req, res) => {
     try {
         const postData = await Post.update(req.body);
-        // body layout {creator_id = req.session.user_id, post_text: text input, post_title: text input}
+
         res.status(204).json(postData);
-    } catch(err) {
+    } catch (err) {
         res.status(500).json(err);
     }
 })
 
 // CREATE - Post Route for Creating Comments
-router.post('/commentit', async (req, res) => {
+router.post('/comment', async (req, res) => {
     try {
-      
-    } catch(err) {
+        const sessTest = req.session.logged_in ? true : false;
+        if (sessTest) {
+            const commentData = await Comment.create({
+                comment_text: req.body.text,
+                post_id: req.body.id,
+                username: req.session.username
+            });
+
+            res.status(200).json({ message: 'New Comment Created!', commentData });
+        } else {
+            res.status(401).json({ message: `You're not logged in!` });
+        }
+
+    } catch (err) {
         res.status(500).json(err);
     }
 })
-
-
-
-
-
 
 
 

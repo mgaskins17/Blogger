@@ -9,7 +9,7 @@ const commentData = [
   {
     comment_text: "Comments 2",
     post_id: "1",
-    username: 'User2',
+    username: 'User2'
   },
   {
     comment_text: "Comments 3",
@@ -19,7 +19,7 @@ const commentData = [
   {
     comment_text: "Comments 4",
     post_id: "1",
-    username: 'User4',
+    username: 'User4'
   },
 ];
 

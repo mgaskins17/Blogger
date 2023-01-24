@@ -5,7 +5,7 @@ const addPost = document.getElementById('add-btn');
 const closeBtn = document.getElementById('closebtn');
 const submitBtn = document.getElementById('submitbtn');
 
- // Add Post Pop Up - Event Listener 
+// Add Post Pop Up - Event Listener 
 addPost.addEventListener('click', function () {
     console.log('this works')
     setTimeout(function () {
@@ -38,8 +38,12 @@ submitBtn.addEventListener('click', async function () {
         });
     
         if (response.ok) {
-            const user = await response.json();
-            console.log(user);
+            const post = await response.json();
+            console.log(post);
+            location.reload();
+        } else {
+            const post = await response.json();
+            console.log(post);
             location.reload();
         }
     }  

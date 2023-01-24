@@ -32,6 +32,16 @@ router.get('/login', async (req, res) => {
   }
 });
 
+// Sign in router
+router.get('/logout', async (req, res) => {
+  try {
+    res.render('logout', {
+    })
+  } catch(err) {
+    res.status(500).json(err);
+  }
+});
+
 // Sign up router
 router.get('/signup', async (req, res) => {
   try {
