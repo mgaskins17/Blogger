@@ -23,7 +23,7 @@ router.post('/postit', async (req, res) => {
 });
 
 
-// UPDATE - Post Route update for posts
+// UPDATE - Put Route update for posts
 router.put('/:id', async (req, res) => {
     try {
         const postData = await Post.update(
@@ -35,14 +35,28 @@ router.put('/:id', async (req, res) => {
             where: {
                 id: req.params.id,
             },
-        }
-        
-        )
+        })
         res.status(204).json('Update Made!');
     } catch (err) {
         res.status(500).json(err);
     }
 });
+
+// DELETE - Delete Route for posts
+router.delete('/:id', async (req, res) => {
+    try {
+        const byePost = await Post.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+
+        res.status(202).json(byePost);
+
+    } catch (err) {
+        res.status(500).json(err); 
+    }
+})
 
 // CREATE - Post Route for Creating Comments
 router.post('/comment', async (req, res) => {

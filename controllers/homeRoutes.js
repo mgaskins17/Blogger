@@ -55,9 +55,7 @@ router.get('/signup', async (req, res) => {
 // Dashboard router
 router.get('/dashboard', async (req, res) => {
   try {
-    console.log(req.session);
     const sessTest = req.session.logged_in ? true : false;
-    console.log(`${sessTest} asdf`) 
 
     // Conditional for whether user is signed in and we send data to page
     if (sessTest) {
@@ -66,7 +64,7 @@ router.get('/dashboard', async (req, res) => {
         include: [{ model: Post }]
       });
       const user = userData.get({ plain: true });
-      console.log(userData);
+      // console.log(userData);
       console.log(user);
       
       res.render('dashboard', {
@@ -80,8 +78,6 @@ router.get('/dashboard', async (req, res) => {
       })
     }
     
-    console.log(sessTest);
-
   } catch(err) {
     res.status(500).json(err);
   }
@@ -98,19 +94,14 @@ router.get('/post/:id', async (req, res) => {
         { model: User, attributes: {exclude: ['password'] }}
       ],
     });
-
     const post = postData.get({ plain: true })
-
-    console.log(post);
-
-    // res.json(postData);
-
-    // console.log(postData);
     
-
+    // res.json(postData);
+    // console.log(postData);
     res.render('postpage',{
       ...post,
-      logged_in: req.session.logged_in
+      logged_in: req.session.user_id === post.user.id ? true : false,
+      user_id: req.session.user_id,
     })
     
 

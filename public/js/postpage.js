@@ -6,6 +6,7 @@ const submitBtn = document.getElementById('submitbtn');
 const editBtn = document.getElementById('edit-btn');
 const submitUpdate = document.getElementById('submitUpdate');
 const closeUpdate = document.getElementById('closeUpdate');
+const deleteBtn = document.getElementById('deleteBtn');
 
 // Getting post ID
 const URLPath = window.location.href;
@@ -58,7 +59,7 @@ submitBtn.addEventListener('click', async function () {
 })
 
 
-// Edit Post - Event Listener
+// Edit Post pop up - take original information and fill out pop out box 
 editBtn.addEventListener('click', function () {
     setTimeout(function () {
         const popupbox = document.getElementById('update-post-form');
@@ -74,8 +75,9 @@ editBtn.addEventListener('click', function () {
 
     document.getElementById('titleupdate').value = titles;
     document.getElementById('textupdate').value = posts;
-})
+});
 
+// Submitting Update 
 submitUpdate.addEventListener('click', async function () {
     // Locating Title and Post Text
     const newTitle = document.getElementById('titleupdate').value;
@@ -84,7 +86,7 @@ submitUpdate.addEventListener('click', async function () {
     if (!newTitle || !newPost) {
         console.log('no value');
     }
-    
+
     const response = await fetch(`/api/post/${postID}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -97,7 +99,19 @@ submitUpdate.addEventListener('click', async function () {
 
 });
 
-    // Close Pop Up - Event Listener
+// Deleting The Post
+deleteBtn.addEventListener('click', async function () {
+    const response = await fetch(`/api/post/${postID}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+        document.location.replace('/dashboard');
+    }
+})
+
+// Close Pop Up - Event Listener
 closeUpdate.addEventListener('click', (e) => {
     setTimeout(function() {
         const popupbox = document.getElementById('update-post-form');
