@@ -6,8 +6,6 @@ async function Login(event) {
     // Collecting username and password from fields
     const username = document.getElementById('username-login').value.trim();
     const password = document.getElementById('password-login').value.trim();
-    // const username = 'User1';
-    // const password = 'password1';
 
     console.log('Please Work')
     console.log(username);
