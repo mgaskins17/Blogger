@@ -34,15 +34,12 @@ closeBtn.addEventListener('click', (e) => {
 // Submit Post - Event Listener
 submitBtn.addEventListener('click', async function () {
     // Text Input Value
-    const commentText = document.getElementById('comment-text').value;
-
-    if (!commentText) {
-        console.log('no value');
-    } else {
+    const commentInput = document.querySelector('#comment-input').value;
+    console.log(commentInput)
         const response = await fetch('/api/post/comment', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text: commentText, id: parseInt(postID) })
+            body: JSON.stringify({ text: commentInput, id: parseInt(postID) })
         });
     
         if (response.ok) {
@@ -55,8 +52,7 @@ submitBtn.addEventListener('click', async function () {
             const comment = await response.json();
             console.log(comment);
         }
-    }  
-})
+});
 
 
 // Edit Post pop up - take original information and fill out pop out box 

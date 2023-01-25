@@ -62,18 +62,17 @@ router.delete('/:id', async (req, res) => {
 router.post('/comment', async (req, res) => {
     try {
         const sessTest = req.session.logged_in ? true : false;
+        console.log(sessTest);
         if (sessTest) {
             const commentData = await Comment.create({
                 comment_text: req.body.text,
                 post_id: req.body.id,
                 username: req.session.username
             });
-
             res.status(200).json({ message: 'New Comment Created!', commentData });
         } else {
             res.status(401).json({ message: `You're not logged in!` });
         }
-
     } catch (err) {
         res.status(500).json(err);
     }
