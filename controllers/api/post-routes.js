@@ -24,15 +24,25 @@ router.post('/postit', async (req, res) => {
 
 
 // UPDATE - Post Route update for posts
-router.put('postup', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
-        const postData = await Post.update(req.body);
-
-        res.status(204).json(postData);
+        const postData = await Post.update(
+        {
+            post_text: req.body.text,
+            post_title: req.body.title
+        },
+        {
+            where: {
+                id: req.params.id,
+            },
+        }
+        
+        )
+        res.status(204).json('Update Made!');
     } catch (err) {
         res.status(500).json(err);
     }
-})
+});
 
 // CREATE - Post Route for Creating Comments
 router.post('/comment', async (req, res) => {

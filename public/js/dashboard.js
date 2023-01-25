@@ -2,8 +2,9 @@
 
 // Query Selectors
 const addPost = document.getElementById('add-btn');
-const closeBtn = document.getElementById('closebtn');
+const closeBtn = document.querySelectorAll('.closebtn');
 const submitBtn = document.getElementById('submitbtn');
+
 
 // Add Post Pop Up - Event Listener 
 addPost.addEventListener('click', function () {
@@ -15,12 +16,16 @@ addPost.addEventListener('click', function () {
 });
 
 // Close Pop Up - Event Listener
-closeBtn.addEventListener('click', (e) => {
-    setTimeout(function() {
-        const popupbox = document.getElementById('create-post-form');
-        popupbox.classList.add('d-none');
-    }, 150);
-});
+for (let i=0; i < closeBtn.length; i++) { // querySelectorAll returns an array of objects that contain the class I'm looking for
+    // For loop runs instantly and adds the event listener to each of those elements with the matching class
+    closeBtn[i].addEventListener('click', (e) => {
+        setTimeout(function() {
+            const popupbox = document.getElementById('create-post-form');
+            popupbox.classList.add('d-none');
+        }, 150);
+    });
+};
+
 
 // Submit Post - Event Listener
 submitBtn.addEventListener('click', async function () {
@@ -48,4 +53,6 @@ submitBtn.addEventListener('click', async function () {
         }
     }  
 })
+
+
 
