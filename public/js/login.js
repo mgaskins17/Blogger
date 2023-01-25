@@ -23,7 +23,7 @@ async function Login(event) {
 
         if (response.ok) {
             console.log('Ok');
-            document.location.replace('/dashboard');            
+            document.location.replace('/');            
         } else {
             alert(response.statusText);
         }
